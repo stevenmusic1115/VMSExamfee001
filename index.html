@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>2026 ABRSM Examination Fees (SGD)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Arial, sans-serif;
+      background: #f6f7f9;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .calculator {
+      margin-top: 24px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .calculator label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    .total {
+      margin-top: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1a7f37;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>2026 ABRSM Examination Fees (SGD)</h1>
+
+    <h2>🎵 Practical Exams (All Instruments)</h2>
+    <table>
+      <tr>
+        <th>Grade</th>
+        <th>Exam Fee (SGD)</th>
+      </tr>
+      <tr><td>Initial Grade</td><td>190.00</td></tr>
+      <tr><td>Grade 1</td><td>211.00</td></tr>
+      <tr><td>Grade 2</td><td>254.00</td></tr>
+      <tr><td>Grade 3</td><td>276.00</td></tr>
+      <tr><td>Grade 4</td><td>297.00</td></tr>
+      <tr><td>Grade 5</td><td>307.00</td></tr>
+      <tr><td>Grade 6</td><td>391.00</td></tr>
+      <tr><td>Grade 7</td><td>444.00</td></tr>
+      <tr><td>Grade 8</td><td>529.00</td></tr>
+    </table>
+
+    <h2 style="margin-top:32px;">📘 Music Theory (Online)</h2>
+    <table>
+      <tr>
+        <th>Grade</th>
+        <th>Exam Fee (SGD)</th>
+      </tr>
+      <tr><td>Grade 1</td><td>140.00</td></tr>
+      <tr><td>Grade 2</td><td>155.00</td></tr>
+      <tr><td>Grade 3</td><td>168.00</td></tr>
+      <tr><td>Grade 4</td><td>194.00</td></tr>
+      <tr><td>Grade 5</td><td>205.00</td></tr>
+    </table>
+
+    <div class="note">
+      • Administrative Fee (required): <strong>30.00 SGD</strong><br />
+      • Optional Add-on: Physical Certificate <strong>6.00 SGD</strong>
+    </div>
+
+    <div class="calculator">
+      <h2>💰 Fee Calculator</h2>
+      <label>
+        Base Exam Fee (SGD):
+        <input type="number" id="basePrice" value="0" min="0" />
+      </label>
+      <label>
+        <input type="checkbox" id="certificate" />
+        Add Physical Certificate (+ 6.00 SGD)
+      </label>
+      <div class="total" id="totalPrice">
+        Total: 0.00 SGD
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 ABRSM Examination Fees | For reference only. Subject to official ABRSM updates.
+  </footer>
+
+  <script>
+    const basePriceInput = document.getElementById("basePrice");
+    const certificateCheckbox = document.getElementById("certificate");
+    const totalPriceDiv = document.getElementById("totalPrice");
+
+    const ADMIN_FEE = 30;
+    const CERT_FEE = 6;
+
+    function calculateTotal() {
+      let total = Number(basePriceInput.value) || 0;
+      total += ADMIN_FEE;
+      if (certificateCheckbox.checked) {
+        total += CERT_FEE;
+      }
+      totalPriceDiv.textContent = `Total: ${total.toFixed(2)} SGD`;
+    }
+
+    basePriceInput.addEventListener("input", calculateTotal);
+    certificateCheckbox.addEventListener("change", calculateTotal);
+  </script>
+</body>
+</html>
