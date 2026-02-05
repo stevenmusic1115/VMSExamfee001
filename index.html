@@ -5,168 +5,333 @@
   <title>2026 ABRSM Examination Fees (SGD)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
                    Roboto, Arial, sans-serif;
-      background: #f6f7f9;
-      margin: 0;
+      background: linear-gradient(135deg, #ffeef8 0%, #ffe5f5 50%, #fff0f8 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
-      color: #333;
+      position: relative;
+      overflow-x: hidden;
     }
-    h1, h2 {
-      text-align: center;
+    body::before {
+      content: '🐰';
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 60px;
+      animation: hop 2s ease-in-out infinite;
+      z-index: 0;
+    }
+    body::after {
+      content: '🐇';
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 60px;
+      animation: hop 2s ease-in-out infinite 1s;
+      z-index: 0;
+    }
+    @keyframes hop {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
     }
     .container {
-      max-width: 900px;
-      margin: auto;
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    table {
+      max-width: 600px;
       width: 100%;
-      border-collapse: collapse;
-      margin-top: 16px;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(255,182,193,0.4);
+      position: relative;
+      z-index: 1;
+      border: 3px solid #ffb6c1;
     }
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
+    h1 {
       text-align: center;
+      color: #ff69b4;
+      font-size: 28px;
+      margin-bottom: 30px;
+      font-weight: 700;
     }
-    th {
-      background: #f0f0f0;
+    .button-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 30px;
     }
-    .note {
-      margin-top: 12px;
-      font-size: 14px;
+    .exam-btn {
+      padding: 20px;
+      border: 3px solid #e0e0e0;
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
       color: #555;
     }
-    .calculator {
-      margin-top: 24px;
-      padding: 16px;
-      background: #f9fafb;
-      border-radius: 8px;
+    .exam-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
     }
-    .calculator label {
+    .exam-btn.active {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      color: white;
+      border-color: #ff69b4;
+      transform: scale(1.05);
+    }
+    .exam-btn .icon {
+      font-size: 32px;
       display: block;
-      margin: 10px 0;
-      font-weight: 500;
+      margin-bottom: 8px;
     }
-    .calculator select {
+    .dropdown-section {
+      display: none;
+      animation: slideIn 0.4s ease;
+    }
+    .dropdown-section.show {
+      display: block;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 15px;
+    }
+    select {
       width: 100%;
-      padding: 8px 12px;
-      margin-top: 4px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
       font-size: 15px;
       background: white;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+      margin-bottom: 20px;
     }
-    .total {
-      margin-top: 12px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #1a7f37;
+    select:focus {
+      outline: none;
+      border-color: #ff69b4;
+    }
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .checkbox-wrapper label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .total-box {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+      color: white;
+      padding: 24px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .total-label {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .total-amount {
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .breakdown {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 4px 0;
     }
     footer {
       text-align: center;
-      margin-top: 32px;
-      font-size: 13px;
-      color: #777;
+      margin-top: 24px;
+      font-size: 12px;
+      color: #999;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>2026 ABRSM Examination Fees (SGD)</h1>
-    <h2>🎵 Practical Exams (All Instruments)</h2>
-    <table>
-      <tr>
-        <th>Grade</th>
-        <th>Exam Fee (SGD)</th>
-      </tr>
-      <tr><td>Initial Grade</td><td>190.00</td></tr>
-      <tr><td>Grade 1</td><td>211.00</td></tr>
-      <tr><td>Grade 2</td><td>254.00</td></tr>
-      <tr><td>Grade 3</td><td>276.00</td></tr>
-      <tr><td>Grade 4</td><td>297.00</td></tr>
-      <tr><td>Grade 5</td><td>307.00</td></tr>
-      <tr><td>Grade 6</td><td>391.00</td></tr>
-      <tr><td>Grade 7</td><td>444.00</td></tr>
-      <tr><td>Grade 8</td><td>529.00</td></tr>
-    </table>
-    <h2 style="margin-top:32px;">📘 Music Theory (Online)</h2>
-    <table>
-      <tr>
-        <th>Grade</th>
-        <th>Exam Fee (SGD)</th>
-      </tr>
-      <tr><td>Grade 1</td><td>140.00</td></tr>
-      <tr><td>Grade 2</td><td>155.00</td></tr>
-      <tr><td>Grade 3</td><td>168.00</td></tr>
-      <tr><td>Grade 4</td><td>194.00</td></tr>
-      <tr><td>Grade 5</td><td>205.00</td></tr>
-    </table>
-    <div class="note">
-      • Administrative Fee (required): <strong>30.00 SGD</strong><br />
-      • Optional Add-on: Physical Certificate <strong>6.00 SGD</strong>
+    <div style="text-align: center; font-size: 80px; margin: -20px 0 20px 0;">🐰</div>
+    <h1>🐰 2026 ABRSM Examination Fees (SGD) 🐇</h1>
+    
+    <div class="button-group">
+      <button class="exam-btn" id="btnInstruments" onclick="selectExamType('instruments')">
+        <span class="icon">🎹</span>
+        All Instruments
+      </button>
+      <button class="exam-btn" id="btnTheory" onclick="selectExamType('theory')">
+        <span class="icon">📚</span>
+        Music Theory
+      </button>
     </div>
-    <div class="calculator">
-      <h2>💰 Fee Calculator</h2>
-      <label>
-        Select Exam Type:
-        <select id="examType">
-          <option value="0">-- Please Select --</option>
-          <optgroup label="Practical Exams">
-            <option value="190">Initial Grade - 190.00 SGD</option>
-            <option value="211">Grade 1 - 211.00 SGD</option>
-            <option value="254">Grade 2 - 254.00 SGD</option>
-            <option value="276">Grade 3 - 276.00 SGD</option>
-            <option value="297">Grade 4 - 297.00 SGD</option>
-            <option value="307">Grade 5 - 307.00 SGD</option>
-            <option value="391">Grade 6 - 391.00 SGD</option>
-            <option value="444">Grade 7 - 444.00 SGD</option>
-            <option value="529">Grade 8 - 529.00 SGD</option>
-          </optgroup>
-          <optgroup label="Music Theory (Online)">
-            <option value="140">Theory Grade 1 - 140.00 SGD</option>
-            <option value="155">Theory Grade 2 - 155.00 SGD</option>
-            <option value="168">Theory Grade 3 - 168.00 SGD</option>
-            <option value="194">Theory Grade 4 - 194.00 SGD</option>
-            <option value="205">Theory Grade 5 - 205.00 SGD</option>
-          </optgroup>
-        </select>
-      </label>
-      <label>
-        <input type="checkbox" id="certificate" />
-        Add Physical Certificate (+ 6.00 SGD)
-      </label>
-      <div class="total" id="totalPrice">
-        Total: 0.00 SGD
+
+    <div class="dropdown-section" id="instrumentsSection">
+      <label for="instrumentGrade">Select Grade:</label>
+      <select id="instrumentGrade" onchange="calculateTotal()">
+        <option value="0">-- Choose Grade --</option>
+        <option value="190">Initial Grade</option>
+        <option value="211">Grade 1</option>
+        <option value="254">Grade 2</option>
+        <option value="276">Grade 3</option>
+        <option value="297">Grade 4</option>
+        <option value="307">Grade 5</option>
+        <option value="391">Grade 6</option>
+        <option value="444">Grade 7</option>
+        <option value="529">Grade 8</option>
+      </select>
+    </div>
+
+    <div class="dropdown-section" id="theorySection">
+      <label for="theoryGrade">Select Grade:</label>
+      <select id="theoryGrade" onchange="calculateTotal()">
+        <option value="0">-- Choose Grade --</option>
+        <option value="140">Grade 1</option>
+        <option value="155">Grade 2</option>
+        <option value="168">Grade 3</option>
+        <option value="194">Grade 4</option>
+        <option value="205">Grade 5</option>
+      </select>
+    </div>
+
+    <div class="dropdown-section" id="optionsSection">
+      <div class="checkbox-wrapper">
+        <input type="checkbox" id="certificate" onchange="calculateTotal()" />
+        <label for="certificate">Add Physical Certificate (+6.00 SGD)</label>
+      </div>
+
+      <div class="total-box" id="totalBox">
+        <div class="total-label">Total Fee</div>
+        <div class="total-amount" id="totalAmount">0.00 SGD</div>
+        <div class="breakdown" id="breakdown" style="display:none;">
+          <div class="breakdown-item">
+            <span>Exam Fee:</span>
+            <span id="examFee">0.00</span>
+          </div>
+          <div class="breakdown-item">
+            <span>Admin Fee:</span>
+            <span>30.00</span>
+          </div>
+          <div class="breakdown-item" id="certRow" style="display:none;">
+            <span>Certificate:</span>
+            <span>6.00</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <footer>
+      © 2026 ABRSM | For reference only
+    </footer>
   </div>
-  <footer>
-    © 2026 ABRSM Examination Fees | For reference only. Subject to official ABRSM updates.
-  </footer>
+
   <script>
-    const examTypeSelect = document.getElementById("examType");
-    const certificateCheckbox = document.getElementById("certificate");
-    const totalPriceDiv = document.getElementById("totalPrice");
     const ADMIN_FEE = 30;
     const CERT_FEE = 6;
-    function calculateTotal() {
-      let total = Number(examTypeSelect.value) || 0;
-      if (total > 0) {
-        total += ADMIN_FEE;
+    let currentType = null;
+
+    function selectExamType(type) {
+      currentType = type;
+      
+      // Reset buttons
+      document.getElementById('btnInstruments').classList.remove('active');
+      document.getElementById('btnTheory').classList.remove('active');
+      
+      // Hide all sections
+      document.getElementById('instrumentsSection').classList.remove('show');
+      document.getElementById('theorySection').classList.remove('show');
+      document.getElementById('optionsSection').classList.remove('show');
+      
+      // Reset selections
+      document.getElementById('instrumentGrade').value = '0';
+      document.getElementById('theoryGrade').value = '0';
+      document.getElementById('certificate').checked = false;
+      
+      // Show selected section
+      if (type === 'instruments') {
+        document.getElementById('btnInstruments').classList.add('active');
+        document.getElementById('instrumentsSection').classList.add('show');
+        document.getElementById('optionsSection').classList.add('show');
+      } else if (type === 'theory') {
+        document.getElementById('btnTheory').classList.add('active');
+        document.getElementById('theorySection').classList.add('show');
+        document.getElementById('optionsSection').classList.add('show');
       }
-      if (certificateCheckbox.checked && total > 0) {
-        total += CERT_FEE;
-      }
-      totalPriceDiv.textContent = `Total: ${total.toFixed(2)} SGD`;
+      
+      calculateTotal();
     }
-    examTypeSelect.addEventListener("change", calculateTotal);
-    certificateCheckbox.addEventListener("change", calculateTotal);
+
+    function calculateTotal() {
+      let examFee = 0;
+      
+      if (currentType === 'instruments') {
+        examFee = Number(document.getElementById('instrumentGrade').value) || 0;
+      } else if (currentType === 'theory') {
+        examFee = Number(document.getElementById('theoryGrade').value) || 0;
+      }
+      
+      let total = 0;
+      const breakdown = document.getElementById('breakdown');
+      const certRow = document.getElementById('certRow');
+      
+      if (examFee > 0) {
+        total = examFee + ADMIN_FEE;
+        
+        if (document.getElementById('certificate').checked) {
+          total += CERT_FEE;
+          certRow.style.display = 'flex';
+        } else {
+          certRow.style.display = 'none';
+        }
+        
+        document.getElementById('examFee').textContent = examFee.toFixed(2);
+        breakdown.style.display = 'block';
+      } else {
+        breakdown.style.display = 'none';
+      }
+      
+      document.getElementById('totalAmount').textContent = total.toFixed(2) + ' SGD';
+    }
   </script>
 </body>
 </html>
