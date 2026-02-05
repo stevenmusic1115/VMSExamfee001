@@ -13,11 +13,9 @@
       padding: 20px;
       color: #333;
     }
-
     h1, h2 {
       text-align: center;
     }
-
     .container {
       max-width: 900px;
       margin: auto;
@@ -26,48 +24,50 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 16px;
     }
-
     th, td {
       padding: 10px;
       border-bottom: 1px solid #ddd;
       text-align: center;
     }
-
     th {
       background: #f0f0f0;
     }
-
     .note {
       margin-top: 12px;
       font-size: 14px;
       color: #555;
     }
-
     .calculator {
       margin-top: 24px;
       padding: 16px;
       background: #f9fafb;
       border-radius: 8px;
     }
-
     .calculator label {
       display: block;
       margin: 10px 0;
+      font-weight: 500;
     }
-
+    .calculator select {
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 4px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      background: white;
+    }
     .total {
       margin-top: 12px;
       font-size: 18px;
       font-weight: bold;
       color: #1a7f37;
     }
-
     footer {
       text-align: center;
       margin-top: 32px;
@@ -79,7 +79,6 @@
 <body>
   <div class="container">
     <h1>2026 ABRSM Examination Fees (SGD)</h1>
-
     <h2>🎵 Practical Exams (All Instruments)</h2>
     <table>
       <tr>
@@ -96,7 +95,6 @@
       <tr><td>Grade 7</td><td>444.00</td></tr>
       <tr><td>Grade 8</td><td>529.00</td></tr>
     </table>
-
     <h2 style="margin-top:32px;">📘 Music Theory (Online)</h2>
     <table>
       <tr>
@@ -109,17 +107,35 @@
       <tr><td>Grade 4</td><td>194.00</td></tr>
       <tr><td>Grade 5</td><td>205.00</td></tr>
     </table>
-
     <div class="note">
       • Administrative Fee (required): <strong>30.00 SGD</strong><br />
       • Optional Add-on: Physical Certificate <strong>6.00 SGD</strong>
     </div>
-
     <div class="calculator">
       <h2>💰 Fee Calculator</h2>
       <label>
-        Base Exam Fee (SGD):
-        <input type="number" id="basePrice" value="0" min="0" />
+        Select Exam Type:
+        <select id="examType">
+          <option value="0">-- Please Select --</option>
+          <optgroup label="Practical Exams">
+            <option value="190">Initial Grade - 190.00 SGD</option>
+            <option value="211">Grade 1 - 211.00 SGD</option>
+            <option value="254">Grade 2 - 254.00 SGD</option>
+            <option value="276">Grade 3 - 276.00 SGD</option>
+            <option value="297">Grade 4 - 297.00 SGD</option>
+            <option value="307">Grade 5 - 307.00 SGD</option>
+            <option value="391">Grade 6 - 391.00 SGD</option>
+            <option value="444">Grade 7 - 444.00 SGD</option>
+            <option value="529">Grade 8 - 529.00 SGD</option>
+          </optgroup>
+          <optgroup label="Music Theory (Online)">
+            <option value="140">Theory Grade 1 - 140.00 SGD</option>
+            <option value="155">Theory Grade 2 - 155.00 SGD</option>
+            <option value="168">Theory Grade 3 - 168.00 SGD</option>
+            <option value="194">Theory Grade 4 - 194.00 SGD</option>
+            <option value="205">Theory Grade 5 - 205.00 SGD</option>
+          </optgroup>
+        </select>
       </label>
       <label>
         <input type="checkbox" id="certificate" />
@@ -130,29 +146,26 @@
       </div>
     </div>
   </div>
-
   <footer>
     © 2026 ABRSM Examination Fees | For reference only. Subject to official ABRSM updates.
   </footer>
-
   <script>
-    const basePriceInput = document.getElementById("basePrice");
+    const examTypeSelect = document.getElementById("examType");
     const certificateCheckbox = document.getElementById("certificate");
     const totalPriceDiv = document.getElementById("totalPrice");
-
     const ADMIN_FEE = 30;
     const CERT_FEE = 6;
-
     function calculateTotal() {
-      let total = Number(basePriceInput.value) || 0;
-      total += ADMIN_FEE;
-      if (certificateCheckbox.checked) {
+      let total = Number(examTypeSelect.value) || 0;
+      if (total > 0) {
+        total += ADMIN_FEE;
+      }
+      if (certificateCheckbox.checked && total > 0) {
         total += CERT_FEE;
       }
       totalPriceDiv.textContent = `Total: ${total.toFixed(2)} SGD`;
     }
-
-    basePriceInput.addEventListener("input", calculateTotal);
+    examTypeSelect.addEventListener("change", calculateTotal);
     certificateCheckbox.addEventListener("change", calculateTotal);
   </script>
 </body>
